@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/Cam/static/css/main.75e4e67b.chunk.css",
-    "main.js": "/Cam/static/js/main.c8b7459a.chunk.js",
-    "main.js.map": "/Cam/static/js/main.c8b7459a.chunk.js.map",
+    "main.js": "/Cam/static/js/main.99d216cf.chunk.js",
+    "main.js.map": "/Cam/static/js/main.99d216cf.chunk.js.map",
     "runtime-main.js": "/Cam/static/js/runtime-main.367af687.js",
     "runtime-main.js.map": "/Cam/static/js/runtime-main.367af687.js.map",
     "static/js/2.9d6ab899.chunk.js": "/Cam/static/js/2.9d6ab899.chunk.js",
@@ -18,6 +18,6 @@
     "static/js/runtime-main.367af687.js",
     "static/js/2.9d6ab899.chunk.js",
     "static/css/main.75e4e67b.chunk.css",
-    "static/js/main.c8b7459a.chunk.js"
+    "static/js/main.99d216cf.chunk.js"
   ]
 }
