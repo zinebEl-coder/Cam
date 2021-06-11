@@ -34,10 +34,12 @@ export default class App extends Component {
       terminated: false,
       isFullScreen: false,
       // progress: 0,
+      x:"",
+      y:"",
       deviceOrientation: window.screen.orientation.angle,
     }
-    this.webcamRef = React.createRef(null);
-    this.canvasRef = React.createRef(null);
+    this.webcamRef = React.createRef();
+    this.canvasRef = React.createRef();
 
     this.doOCR = this.doOCR.bind(this);
     this.handleStart = this.handleStart.bind(this);
@@ -57,6 +59,14 @@ export default class App extends Component {
   //     // this.setState({ocrResult: text, loading: false, loadingMessage: ""});
 
     this.loadTesseract();
+
+  }
+  onFullScreenChange (isFullScreen) {
+    this.setState({
+      isFullScreen:isFullScreen,
+
+    });
+    console.log("on full screen change",isFullScreen);
 
   }
 
@@ -135,37 +145,22 @@ export default class App extends Component {
     this.setState({started: false, terminated: false, ocrResult: ""}, this.loadTesseract);
   }
 
-  onFullScreenChange (isFullScreen) {
-    this.setState({
-      isFullScreen: isFullScreen
-    })
-  }
+
+
 
 
 
   requestOrExitFullScreenByElement () {
-    this.elFullScreenRef.fullScreen(this.elRef)
+
+    this.elFullScreenRef.fullScreen(this.elRef);
+
+
   }
   
   render() {
-    const isFullScreen  = this.state.isFullScreen
-    const videoConstraintsPortrait = {
-      width: 720, /*{ min: 400, ideal: 1080 },*/
-    //
-      //
-      height: 1280, /*{ min: 640, ideal: 1920, max: 1920 },*/
-     // facingMode: "environment",
-      aspectRatio: 1.777777778,
-      // frameRate: { max: 30 },
-    };
 
-    const videoConstraintsLandscape = {
-      height: 720, ///*{ min: 400, ideal: 1080 },*/
-     width: 1280, /*{ min: 640, ideal: 1920, max: 1920 },*/
-      facingMode: "environment",
-      aspectRatio: 1.777777778,
-      // frameRate: { max: 30 },
-    };
+
+
 
 
     return (
@@ -200,39 +195,43 @@ export default class App extends Component {
         {this.state.started === true ?
         <div>
           {this.state.terminated === false ?
-          <Row>
-            <Col sm="12" className="fill-window" >
+
               <div className='app'>
-                <p>Browser support fullscreen feature: {`${fullScreenSupported()}`}</p>
-                <p>Browser is fullscreen: {`${isFullScreen}`}</p>
+
+                <Row>
+                  <Col sm={12} xs={12} xl={12} lg={12}  >
+
+                <FullScreen   ref={ref => { this.elFullScreenRef = ref }} >
+                  <div id="fullwidth-video">
+   <div  onClick={this.requestOrExitFullScreenByElement.bind(this)}  ref={ref => { this.elRef = ref }}
 
 
 
-
-                <FullScreen ref={ref => { this.elFullScreenRef = ref }}>
-           <div ref={ref => { this.elRef = ref }}
-                onClick={this.requestOrExitFullScreenByElement.bind(this)}>
-             <Webcam
-                 id="myCam"
-                 ref={this.webcamRef}
-                 muted={false}
-                 audio={false}
-                 videoConstraints={videoConstraintsPortrait}
-                 style={
-                   {
-                     width:"100%"
-                   }
-                 }
-
-             />
-             {!isFullScreen ? 'Request FullScreen by Element' : 'Exit FullScreen by Element'}
+         className="fullwidth-video-bg"
+   >
 
 
-           </div>
+         <Webcam
+
+             id= "myCam"
+
+             ref={this.webcamRef}
+             muted={false}
+             audio={false}
+             videoConstraints={{facingMode: 'environment',}}
+             forceScreenshotSourceSize={true}
+
+         />
+       </div>
+     </div>
+
+
 
                 </FullScreen>
 
-              </div>
+                  </Col>
+                  <Col xs={12}>
+
 
                 <canvas
                 id="myCanvas"
@@ -253,9 +252,13 @@ export default class App extends Component {
                   height: "auto",
                 }}
               />
-            </Col>
-          </Row>
-          :
+              </Col>
+              </Row>
+            </div>
+
+
+
+              :
           <Row>
             <Col>
               <div >
